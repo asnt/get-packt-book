@@ -2,43 +2,30 @@
 
 export PATH=/bin:/usr/bin:$PATH
 
-# Login Credentials
+# Default parameters
 USERNAME=""
 PASSWORD=""
-CREDENTIALS_FILE="$HOME/.packt"
-
-# Options
-DOWNLOAD=$PACKT_DOWNLOAD
+DOWNLOAD=Y
 DOWNLOAD_PATH="$HOME/packt"
+DOWNLOAD_FORMATS="epub pdf" 
 
-# Log running information
-echo "Date: $(date)"
-
-if [ -z "$DOWNLOAD" ]; then
-	DOWNLOAD="Y"
-fi
-
-if [ -f $CREDENTIALS_FILE ];
+CONFIG_FILE="$HOME/.packt.conf"
+if [ ! -f $CONFIG_FILE ]
 then
-	credentials_base64=`cat $CREDENTIALS_FILE`
-	credentials=`echo $credentials_base64 | base64 --decode`
-	USERNAME=`echo $credentials | awk -F":" '{print $1}'`
-	PASSWORD=`echo $credentials | awk -F":" '{print $2}'`
+    echo "Cannot find config file '$CONFIG_FILE'"
+    exit 1
 fi
+chmod 400 $CONFIG_FILE
+source $CONFIG_FILE
 
 if [ -z "$USERNAME" ] || [ -z $PASSWORD ]
 then
-	echo "Please enter your Packt username (email): "
-	read USERNAME
-	echo "Please enter your Packt password: "
-	read PASSWORD
-	credentials_base64=`echo "$USERNAME:$PASSWORD" | base64`
-	echo $credentials_base64 > $CREDENTIALS_FILE
-	chmod 400 $CREDENTIALS_FILE
-	echo "Your credentials was saved to $CREDENTIALS_FILE in base64 encoded format."
+    echo "Please set USERNAME and PASSWORD in the config file"
+    exit 1
 fi
 
-# Constant
+echo "Date: $(date)"
+
 TMP_FILE="/tmp/free-learning.txt"
 URL_LOGIN="https://www.packtpub.com"
 COMMAND_LOGIN="curl -s -i -X POST -d email=$USERNAME&password=$PASSWORD&op=Login&form_id=packt_user_login_form $URL_LOGIN"
@@ -66,8 +53,7 @@ $COMMAND_CLAIM_FREE_BOOK > /dev/null 2>&1
 
 if [ "Y" = "$DOWNLOAD" ]; then
 	mkdir -p $DOWNLOAD_PATH
-
-    for format in pdf epub
+    for format in $DOWNLOAD_FORMATS
     do
         URL_DOWNLOAD_BOOK="https://www.packtpub.com/ebook_download/$book_number/$format"
         BOOK_LOCATION="$DOWNLOAD_PATH"/"$book_title"."$format"
@@ -77,5 +63,5 @@ if [ "Y" = "$DOWNLOAD" ]; then
         echo "Downloaded to $BOOK_LOCATION"
     done
 else
-	echo "Free book has added to your Packt account."
+	echo "Free book has been added to your Packt account."
 fi
