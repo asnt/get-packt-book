@@ -9,10 +9,23 @@ DOWNLOAD=Y
 DOWNLOAD_PATH="$HOME/packt"
 DOWNLOAD_FORMATS="epub pdf" 
 
+# Load config
 CONFIG_FILE="$HOME/.packt.conf"
+EXAMPLE_CONFIG_FILE="$CONFIG_FILE.example"
+EXAMPLE_CONFIG=$(cat << EOF
+USERNAME=""
+\nPASSWORD=""\
+\nDOWNLOAD=Y
+\nDOWNLOAD_PATH="$HOME/packt"
+\nDOWNLOAD_FORMATS="epub pdf"
+EOF
+)
+
 if [ ! -f $CONFIG_FILE ]
 then
-    echo "Cannot find config file '$CONFIG_FILE'"
+    echo "Cannot find config file $CONFIG_FILE"
+    echo -e $EXAMPLE_CONFIG > $EXAMPLE_CONFIG_FILE
+    echo "Copy and adapt the example file at $EXAMPLE_CONFIG_FILE"
     exit 1
 fi
 chmod 400 $CONFIG_FILE
@@ -24,6 +37,7 @@ then
     exit 1
 fi
 
+# Claim and download the books
 echo "Date: $(date)"
 
 TMP_FILE="/tmp/free-learning.txt"
