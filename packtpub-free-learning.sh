@@ -67,13 +67,15 @@ $COMMAND_CLAIM_FREE_BOOK > /dev/null 2>&1
 if [ "Y" = "$DOWNLOAD" ]; then
 	mkdir -p $DOWNLOAD_PATH
 
-	URL_DOWNLOAD_BOOK="https://www.packtpub.com/ebook_download/$book_number/pdf"
-	BOOK_LOCATION="$DOWNLOAD_PATH"/"$book_title".pdf
-	COMMAND_DOWNLOAD_BOOK="curl -s -L --cookie $login_cookie $URL_DOWNLOAD_BOOK"
-
-	echo "Downloading to $BOOK_LOCATION..."
-	$COMMAND_DOWNLOAD_BOOK > "$BOOK_LOCATION"
-	echo "Downloaded to $BOOK_LOCATION"
+    for format in pdf epub
+    do
+        URL_DOWNLOAD_BOOK="https://www.packtpub.com/ebook_download/$book_number/$format"
+        BOOK_LOCATION="$DOWNLOAD_PATH"/"$book_title"."$format"
+        COMMAND_DOWNLOAD_BOOK="curl -s -L --cookie $login_cookie $URL_DOWNLOAD_BOOK"
+        echo "Downloading to $BOOK_LOCATION..."
+        $COMMAND_DOWNLOAD_BOOK > "$BOOK_LOCATION"
+        echo "Downloaded to $BOOK_LOCATION"
+    done
 else
 	echo "Free book has added to your Packt account."
 fi
