@@ -1,15 +1,35 @@
-# packt_free_learning
-Shell script to retrieve free book from Packt.
+# get-packt-book.sh
 
-First time login will save your credential to $HOME/.packt file in base64($username:$password) format.
-Subsequently it will retrieve your credential from file.
+Download today's free ebook from Packt Publishing.
 
-Default download location is $HOME/packt/.
+## Install (optional)
 
-### Usage
+To make the script available globally or for packaging, use `make install` with
+your preferred locations, e.g.
 
-    bash -c "$(curl -s https://raw.githubusercontent.com/ch33hau/packt_free_learning/master/packtpub-free-learning.sh)"
+```sudo DESTDIR=/custom/root/dir make PREFIX=/usr install```
 
-If you prefer not to download the claimed free book (eg, running cronjob at server):
+The default directories are
+```
+DESTDIR=
+PREFIX=/usr/local
+```
 
-    PACKT_DOWNLOAD=N bash -c "$(curl -s https://raw.githubusercontent.com/ch33hau/packt_free_learning/master/packtpub-free-learning.sh)"
+## Configuration
+
+The configuration file `$HOME/.packt.conf` is sourced by the shell script.
+It has the following content:
+```
+USERNAME=""
+PASSWORD=""
+DOWNLOAD_PATH="$HOME/packt"
+DOWNLOAD_FORMATS="epub pdf" # epub, mobi, pdf 
+```
+Set at least your `USERNAME` and `PASSWORD`.
+
+If `$HOME/.packt.conf` does not exist, run the `get-packt-book.sh` script once
+to generate an example configuration file in `$HOME/.packt.conf.example`.
+
+## Usage
+
+Run `get-packt-book.sh` installed globally or from the repository directly.
