@@ -8,12 +8,27 @@ Based on [ch33hau](https://github.com/ch33hau/packt_free_learning)'s work.
 
 ## Install
 
+### Manually
+
 ```
 $ sudo make install DESTDIR=/custom/root PREFIX=/usr
 ```
 with `DESTDIR=` and `PREFIX=/usr/local` by default.
 
 A systemd unit and a timer are installed in `$(DESTDIR)/usr/lib/systemd/user`.
+
+### Arch Linux package
+
+Make an Arch Linux package from the latest master git repository.
+
+```
+$ export BUILD_DIR=/my/build/dir
+$ cd $BUILD_DIR
+$ wget https://raw.githubusercontent.com/asnt/get-packt-book/master/PKGBUILD
+$ makepkg
+$ sudo pacman -U get-packt-book-git-VERSION.tar.xz
+```
+Replace `VERSION` with the generated value.
 
 ## Configuration
 
