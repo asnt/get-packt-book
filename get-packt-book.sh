@@ -13,7 +13,7 @@ EXAMPLE_CONFIG=$(cat << EOF
 USERNAME=""
 \nPASSWORD=""\
 \nDOWNLOAD_PATH="$HOME/packt"
-\nDOWNLOAD_FORMATS="epub pdf"	# epub mobi pdf
+\nDOWNLOAD_FORMATS="epub mobi pdf"
 EOF
 )
 
