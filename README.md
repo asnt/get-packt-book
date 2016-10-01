@@ -8,9 +8,6 @@ Based on [ch33hau](https://github.com/ch33hau/packt_free_learning)'s work.
 
 ## Install (optional)
 
-To make the script available globally or for packaging, use `make install` with
-your preferred locations, e.g.
-
 ```sudo DESTDIR=/custom/root/dir make PREFIX=/usr install```
 
 The default directories are
@@ -22,7 +19,7 @@ PREFIX=/usr/local
 ## Configuration
 
 The configuration file `$HOME/.packt.conf` is sourced by the shell script.
-It has the following content:
+It contains:
 ```
 USERNAME=""
 PASSWORD=""
@@ -36,4 +33,4 @@ to generate an example configuration file in `$HOME/.packt.conf.example`.
 
 ## Usage
 
-Run `get-packt-book.sh` installed globally or from the repository directly.
+Run `get-packt-book.sh`.
