@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export PATH=/bin:/usr/bin:$PATH
-
 # Default parameters
 USERNAME=""
 PASSWORD=""
