@@ -2,6 +2,10 @@
 
 Download today's free ebook from Packt Publishing.
 
+## Credits
+
+Based on [ch33hau](https://github.com/ch33hau/packt_free_learning)'s work.
+
 ## Install (optional)
 
 To make the script available globally or for packaging, use `make install` with
