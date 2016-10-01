@@ -6,15 +6,14 @@ Download today's free ebook from Packt Publishing.
 
 Based on [ch33hau](https://github.com/ch33hau/packt_free_learning)'s work.
 
-## Install (optional)
+## Install
 
-```sudo DESTDIR=/custom/root/dir make PREFIX=/usr install```
+```
+$ sudo make install DESTDIR=/custom/root PREFIX=/usr
+```
+with `DESTDIR=` and `PREFIX=/usr/local` by default.
 
-The default directories are
-```
-DESTDIR=
-PREFIX=/usr/local
-```
+A systemd unit and a timer are installed in `$(DESTDIR)/usr/lib/systemd/user`.
 
 ## Configuration
 
@@ -24,7 +23,7 @@ It contains:
 USERNAME=""
 PASSWORD=""
 DOWNLOAD_PATH="$HOME/packt"
-DOWNLOAD_FORMATS="epub pdf" # epub, mobi, pdf 
+DOWNLOAD_FORMATS="epub mobi pdf"
 ```
 Set at least your `USERNAME` and `PASSWORD`.
 
@@ -33,4 +32,17 @@ to generate an example configuration file in `$HOME/.packt.conf.example`.
 
 ## Usage
 
-Run `get-packt-book.sh`.
+Run `get-packt-book.sh` manually or schedule a daily execution (see below).
+
+## Schedule daily execution
+
+Use a systemd timer to execute the script daily.
+
+Install the package (see above) or copy the systemd unit and timer manually to
+`$HOME/.config/systemd/user`.
+
+Refresh systemd and activate the timer:
+```
+$ systemctl --user daemon-reload
+$ systemctl --user enable packt.timer
+```
