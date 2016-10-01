@@ -36,17 +36,27 @@ fi
 # Claim and download the books
 echo "Date: $(date)"
 
-TMP_FILE="/tmp/free-learning.txt"
 URL_LOGIN="https://www.packtpub.com"
-COMMAND_LOGIN="curl -s -i -X POST -d email=$USERNAME&password=$PASSWORD&op=Login&form_id=packt_user_login_form $URL_LOGIN"
-
 URL_FREE_LEARNING="https://www.packtpub.com/packt/offers/free-learning"
+FORM_DATA_FILE="/tmp/packt-form.txt"
+LOGIN_FILE="/tmp/packt-login.txt"
+
+touch $FORM_DATA_FILE
+chmod 700 $FORM_DATA_FILE
+
+FORM_DATA="email=$USERNAME&password=$PASSWORD&op=Login&form_id=packt_user_login_form"
+echo $FORM_DATA > $FORM_DATA_FILE
+COMMAND_LOGIN="curl -s -i -X POST -d @$FORM_DATA_FILE $URL_LOGIN"
+
 COMMAND_FREE_LEARNING="curl -s -X GET $URL_FREE_LEARNING"
 
-response_login=$($COMMAND_LOGIN > $TMP_FILE)
-login_cookie=$(cat $TMP_FILE | grep Set-Cookie | tail -1 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
+touch $LOGIN_FILE
+chmod 700 $LOGIN_FILE
+
+response_login=$($COMMAND_LOGIN > $LOGIN_FILE)
+login_cookie=$(cat $LOGIN_FILE | grep Set-Cookie | tail -1 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
 if [[ -z "$login_cookie" ]]; then
-        login_cookie=$(cat $TMP_FILE | grep Set-Cookie | tail -2 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
+        login_cookie=$(cat $LOGIN_FILE | grep Set-Cookie | tail -2 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
 fi
 
 response_freelearning=$($COMMAND_FREE_LEARNING)
