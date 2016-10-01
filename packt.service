@@ -1,0 +1,6 @@
+[Unit]
+Description=Download the Packt free learning ebook of the day
+Wants=network.target
+
+[Service]
+ExecStart=/bin/bash -c "get-packt-book.sh"
