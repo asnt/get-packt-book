@@ -56,7 +56,12 @@ chmod 700 $LOGIN_FILE
 response_login=$($COMMAND_LOGIN > $LOGIN_FILE)
 login_cookie=$(cat $LOGIN_FILE | grep Set-Cookie | tail -1 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
 if [[ -z "$login_cookie" ]]; then
-        login_cookie=$(cat $LOGIN_FILE | grep Set-Cookie | tail -2 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
+    login_cookie=$(cat $LOGIN_FILE | grep Set-Cookie | tail -2 | grep -Po "Set-Cookie: (SESS_live=*\w*)" | cut -d\  -f2)
+fi
+if [[ -z "$login_cookie" ]]
+then
+    >&2 echo "Error: Could not login"
+    exit 1
 fi
 
 response_freelearning=$($COMMAND_FREE_LEARNING)

@@ -1,6 +1,9 @@
 [Unit]
 Description=Download the Packt free learning ebook of the day
-Wants=network.target
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 ExecStart=/bin/bash -c "get-packt-book.sh"
+Restart=on-failure
+RestartSec=60
