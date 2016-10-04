@@ -17,7 +17,7 @@ with `DESTDIR=` and `PREFIX=/usr/local` by default.
 
 A systemd unit and a timer are installed in `$(DESTDIR)/usr/lib/systemd/user`.
 
-### Arch Linux package
+### Arch Linux
 
 Make an Arch Linux package from the latest master git repository.
 
