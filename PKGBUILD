@@ -22,5 +22,6 @@ pkgver() {
 package() {
   cd "$srcdir/$pkgname"
   make DESTDIR="$pkgdir/" PREFIX="/usr" install
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
