@@ -70,6 +70,12 @@ book_href=$(echo $response_freelearning | grep -Po "(?<=<a href=\")[\w \/-]+(?=\
 book_number=$(echo $book_href | cut -d/ -f3)
 book_url=$URL_LOGIN$book_href
 
+if [[ -z "$book_title" ]]
+then
+    >&2 echo "error: cannot retrieve book info"
+    exit 1
+fi
+
 echo "Today's free book: $book_title"
 echo "Claim url: $book_url"
 COMMAND_CLAIM_FREE_BOOK="curl -i -s --cookie $login_cookie $book_url"
