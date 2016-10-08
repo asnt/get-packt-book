@@ -60,7 +60,7 @@ if [[ -z "$login_cookie" ]]; then
 fi
 if [[ -z "$login_cookie" ]]
 then
-    >&2 echo "Error: Could not login"
+    >&2 echo "error: cannot login"
     exit 1
 fi
 
